@@ -3,18 +3,16 @@ import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
+import sectionize from '@hbsnow/rehype-sectionize'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
 import {
   transformerMetaHighlight,
   transformerNotationDiff,
 } from '@shikijs/transformers'
 import { defineConfig } from 'astro/config'
-import rehypeKatex from 'rehype-katex'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkEmoji from 'remark-emoji'
-import remarkMath from 'remark-math'
 import remarkToc from 'remark-toc'
-import sectionize from '@hbsnow/rehype-sectionize'
 
 import icon from 'astro-icon'
 
@@ -34,8 +32,6 @@ export default defineConfig({
     syntaxHighlight: false,
     rehypePlugins: [
       rehypeHeadingIds,
-      rehypeKatex,
-      // @ts-expect-error
       sectionize,
       [
         rehypePrettyCode,
@@ -55,11 +51,10 @@ export default defineConfig({
         },
       ],
     ],
-    remarkPlugins: [remarkToc, remarkMath, remarkEmoji],
+    remarkPlugins: [remarkToc, remarkEmoji],
   },
   server: {
     port: 1234,
-    host: true,
   },
   devToolbar: {
     enabled: false,

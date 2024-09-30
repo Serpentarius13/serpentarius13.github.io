@@ -1,6 +1,5 @@
 ---
 import Link from '@/components/Link.astro'
-import AvatarComponent from '@/components/ui/avatar'
 import type { Link as SocialLink } from '@/consts'
 import { cn } from '@/lib/utils'
 import type { CollectionEntry } from 'astro:content'
@@ -23,13 +22,25 @@ const {
   mail,
 } = author.data
 
-const socialLinks: SocialLink[] = [
-  website && { href: website, label: 'Website' },
-  github && { href: github, label: 'GitHub' },
-  twitter && { href: twitter, label: 'Twitter' },
-  linkedin && { href: linkedin, label: 'LinkedIn' },
-  mail && { href: mail, label: 'Email' },
-].filter(Boolean) as SocialLink[]
+const getSocialLinks = (): SocialLink[] => {
+  const socialLinks: SocialLink[] = []
+  const map = {
+    Website: website,
+    GitHub: github,
+    Twitter: twitter,
+    LinkedIn: linkedin,
+    Email: mail,
+  }
+  for (const [key, value] of Object.entries(map)) {
+    if (value) {
+      socialLinks.push({ href: value, label: key })
+    }
+  }
+
+  return socialLinks
+}
+
+const socialLinks = getSocialLinks()
 ---
 
 <div
@@ -40,17 +51,16 @@ const socialLinks: SocialLink[] = [
       href={`/authors/${author.slug}`}
       class={cn('block', linkDisabled && 'pointer-events-none')}
     >
-      <AvatarComponent
-        client:load
-        src={avatar}
-        alt={`Avatar of ${name}`}
-        fallback={name[0]}
-        className={cn(
-          'size-32 rounded-md',
-          !linkDisabled &&
-            'transition-shadow duration-300 hover:cursor-pointer hover:ring-2 hover:ring-primary',
-        )}
-      />
+      <div class="avatar">
+        <div
+          class={cn('w-32 rounded-md', {
+            ['transition-shadow duration-300 hover:cursor-pointer hover:ring-2 hover:ring-primary']:
+              !linkDisabled,
+          })}
+        >
+          <img alt={`Avatar of ${name}`} src={avatar} />
+        </div>
+      </div>
     </Link>
     <div class="flex flex-grow flex-col justify-between gap-y-4">
       <div>
