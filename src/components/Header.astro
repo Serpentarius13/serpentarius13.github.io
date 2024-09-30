@@ -1,15 +1,14 @@
 ---
 import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
-import MobileMenu from '@/components/ui/mobile-menu'
-import { ModeToggle } from '@/components/ui/mode-toggle'
 import { NAV_LINKS, SITE } from '@/consts'
 import { Image } from 'astro:assets'
 import logo from '../../public/static/logo.svg'
+import { ThemeSwitcher } from './ui-new/ThemeSwitcher'
 ---
 
 <header
-  class="sticky top-0 z-10 bg-background/50 backdrop-blur-md"
+  class="sticky top-0 z-10 bg-background/50 backdrop-blur-md dark:bg-none"
   transition:persist
 >
   <Container>
@@ -34,8 +33,7 @@ import logo from '../../public/static/logo.svg'
             ))
           }
         </nav>
-        <MobileMenu client:load transition:persist />
-        <ModeToggle client:load transition:persist />
+        <ThemeSwitcher client:load />
       </div>
     </div>
   </Container>

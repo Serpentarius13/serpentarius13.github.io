@@ -2,7 +2,6 @@
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
-import { buttonVariants } from '@/components/ui/button'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import { cn } from '@/lib/utils'
@@ -21,13 +20,7 @@ import { cn } from '@/lib/utils'
           Oops! The page you're looking for doesn't exist.
         </p>
       </div>
-      <Link
-        href="/"
-        class={cn(
-          buttonVariants({ variant: 'outline' }),
-          'flex gap-x-1.5 group',
-        )}
-      >
+      <Link href="/" class={cn('flex gap-x-1.5 group btn btn-outline')}>
         <span class="transition-transform group-hover:-translate-x-1"
           >&larr;</span
         > Go to home page

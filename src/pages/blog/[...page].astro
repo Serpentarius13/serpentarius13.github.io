@@ -2,11 +2,11 @@
 import BlogCard from '@/components/BlogCard.astro'
 import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
-import PaginationComponent from '@/components/ui/pagination'
+import PaginationComponente from '@/components/ui-new/Pagination'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
 import type { PaginateFunction } from 'astro'
-import { type CollectionEntry, getCollection } from 'astro:content'
+import { getCollection, type CollectionEntry } from 'astro:content'
 
 export async function getStaticPaths({
   paginate,
@@ -38,8 +38,12 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
   <Container class="flex grow flex-col gap-y-6">
     <Breadcrumbs
       items={[
-        { label: 'Blog', href: '/blog', icon: 'lucide:archive' },
-        { label: `Page ${page.currentPage}`, icon: 'lucide:folder-open' },
+        {
+          label: `Blog [${page.currentPage}]`,
+          href: '/blog',
+          icon: 'lucide:scroll-text',
+          active: true,
+        },
       ]}
     />
 
@@ -60,11 +64,10 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
       }
     </div>
 
-    <PaginationComponent
+    <PaginationComponente
       currentPage={page.currentPage}
       totalPages={page.lastPage}
       baseUrl="/blog/"
-      client:load
     />
   </Container>
 </Layout>

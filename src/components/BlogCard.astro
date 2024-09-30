@@ -1,7 +1,5 @@
 ---
-import AvatarComponent from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
+import { Avatar } from '@/components/ui-new/Avatar'
 import { formatDate, parseAuthors, readingTime } from '@/lib/utils'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
@@ -21,11 +19,11 @@ const authors = await parseAuthors(entry.data.authors ?? [])
 ---
 
 <div
-  class="not-prose rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+  class="not-prose card rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
 >
   <Link
     href={`/${entry.collection}/${entry.slug}`}
-    class="flex flex-col gap-4 sm:flex-row"
+    class="card-body flex flex-col gap-4 sm:flex-row"
   >
     {
       entry.data.image && (
@@ -55,29 +53,28 @@ const authors = await parseAuthors(entry.data.authors ?? [])
             <>
               {authors.map((author) => (
                 <div class="flex items-center gap-x-1.5">
-                  <AvatarComponent
-                    client:load
+                  <Avatar
                     src={author.avatar}
                     alt={author.name}
-                    fallback={author.name[0]}
-                    className="size-5 rounded-full"
+                    placeholder={author.name[0]}
+                    imgWrapperClassname="w-5 rounded-full"
+                    client:load
                   />
+
                   <span>{author.name}</span>
                 </div>
               ))}
-              <Separator orientation="vertical" className="h-4" />
             </>
           )
         }
         <span>{formattedDate}</span>
-        <Separator orientation="vertical" className="h-4" />
         <span>{readTime}</span>
       </div>
       {
         entry.data.tags && (
           <div class="flex flex-wrap gap-2">
             {entry.data.tags.map((tag) => (
-              <Badge variant="secondary">{tag}</Badge>
+              <span class="badge">#{tag}</span>
             ))}
           </div>
         )

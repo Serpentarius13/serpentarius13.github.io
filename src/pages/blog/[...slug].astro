@@ -4,9 +4,6 @@ import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
-import { badgeVariants } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
 import { formatDate, parseAuthors, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
@@ -115,13 +112,11 @@ const authors = await parseAuthors(post.data.authors ?? [])
                     </div>
                   ))}
                 </div>
-                <Separator orientation="vertical" className="h-4" />
               </>
             )
           }
           <div class="flex items-center gap-2">
             <span>{formatDate(post.data.date)}</span>
-            <Separator orientation="vertical" className="h-4" />
             <span>{readingTime(post.body)}</span>
           </div>
         </div>
@@ -129,10 +124,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
           {
             post.data.tags && post.data.tags.length > 0 ? (
               post.data.tags.map((tag) => (
-                <a
-                  href={`/tags/${tag}`}
-                  class={badgeVariants({ variant: 'secondary' })}
-                >
+                <a href={`/tags/${tag}`} class="badge badge-secondary">
                   <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
                   {tag}
                 </a>
@@ -158,10 +150,8 @@ const authors = await parseAuthors(post.data.authors ?? [])
     <PostNavigation prevPost={prevPost} nextPost={nextPost} />
   </Container>
 
-  <Button
-    variant="outline"
-    size="icon"
-    className="group fixed bottom-8 right-8 z-50 hidden"
+  <button
+    class="group btn btn-outline fixed bottom-8 right-8 z-50 hidden"
     id="scroll-to-top"
     title="Scroll to top"
     aria-label="Scroll to top"
@@ -170,7 +160,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
       name="lucide:arrow-up"
       class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
     />
-  </Button>
+  </button>
 
   <script>
     document.addEventListener('astro:page-load', () => {
