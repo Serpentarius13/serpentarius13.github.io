@@ -16,7 +16,7 @@ This is a list of the various technologies used to build this website:
 | ------------------- | -------------------------------------------------------------------------------------------------- |
 | Framework           | [Astro](https://astro.build/)                                                                      |
 | Styling             | [Tailwind](https://tailwindcss.com)                                                                |
-| Components          | [shadcn/ui](https://ui.shadcn.com/)                                                                |
+| Components          | [daisyui](https://daisyui.com/)                                                                    |
 | Content             | [MDX](https://mdxjs.com/)                                                                          |
 | Syntax Highlighting | [Shiki](https://github.com/shikijs/shiki) + [rehype-pretty-code](https://rehype-pretty.pages.dev/) |
 | Graphics            | [Figma](https://www.figma.com/)                                                                    |
