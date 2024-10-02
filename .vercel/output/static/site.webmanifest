@@ -1,0 +1,14 @@
+{
+  "name": "erudite",
+  "short_name": "erudite",
+  "icons": [
+    {
+      "src": "/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#121212",
+  "background_color": "#121212",
+  "display": "standalone"
+}
