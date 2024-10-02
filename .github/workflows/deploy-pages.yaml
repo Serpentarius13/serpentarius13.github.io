@@ -28,10 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses:
-          actions/checkout@v4
-          #? if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-          #? variable ${{ github.workspace }}, bash
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9.4.0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
