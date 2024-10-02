@@ -1,6 +1,7 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Container from '@/components/Container.astro'
+import IndexHeader from '@/components/IndexHeader.astro'
 import Link from '@/components/Link.astro'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
@@ -14,9 +15,9 @@ const blog = (await getCollection('blog'))
 
 <Layout title="Home" description={SITE.DESCRIPTION} class="h-0">
   <Container class="flex h-full flex-col gap-y-6">
-    <!-- <IndexHeader /> -->
+    <IndexHeader />
     <section class="flex h-full flex-col gap-y-4">
-      <h2 class="text-2xl font-bold">Posts</h2>
+      <h2 class="text-2xl font-bold">My latest post</h2>
       <ul class="not-prose flex flex-col gap-y-4">
         {
           blog.map((post) => (

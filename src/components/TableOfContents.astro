@@ -36,7 +36,7 @@ function buildToc(headings: Heading[]): Heading[] {
 }
 ---
 
-<details open class="group block rounded-xl border p-4 xl:hidden">
+<details open class="border-thin group block rounded-xl p-4 ring xl:hidden">
   <summary
     class="flex cursor-pointer items-center justify-between text-xl font-semibold"
   >
@@ -87,7 +87,7 @@ function buildToc(headings: Heading[]): Heading[] {
           if (!link) return
 
           const addRemove = section.isIntersecting ? 'add' : 'remove'
-          link.classList[addRemove]('text-foreground')
+          link.classList[addRemove]('text-base-content')
         })
       },
       {

@@ -1,14 +1,29 @@
 ---
-
+import Flower from './flower.svg?raw'
 ---
 
 <section>
-  <div
-    class="card w-full bg-base-100 shadow-xl dark:bg-background dark:shadow-base-300"
-  >
-    <div class="card-body">
-      <h2 class="card-title">Hello World!</h2>
-      <p>I worke!</p>
+  <div class="card">
+    <div class="card-content flex items-start gap-2">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl">Welcome to my place.</h2>
+        <p>
+          Here, I write about my favorite programming language JavaScript, drop
+          based thoughts on life, and sometimes try to make educative content.
+          Hope you will rest well.
+        </p>
+      </div>
+      <div class="h-full min-w-[240px]">
+        <Fragment class:list="!stroke-red-500" set:html={Flower} />
+      </div>
     </div>
   </div>
 </section>
+
+<style is:global>
+  html.dark {
+    #flower g {
+      @apply fill-blue-500;
+    }
+  }
+</style>

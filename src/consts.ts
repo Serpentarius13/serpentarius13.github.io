@@ -17,7 +17,7 @@ export const SITE: Site = {
   DESCRIPTION:
     'Void Flower is my personal website with (for now just a) blog, where I write about stuff programming & not.',
   EMAIL: 'serpentarium13@mail.ru',
-  NUM_POSTS_ON_HOMEPAGE: 3,
+  NUM_POSTS_ON_HOMEPAGE: 1,
   POSTS_PER_PAGE: 3,
   SITEURL: 'https://void-flower.vercel.app/',
 }

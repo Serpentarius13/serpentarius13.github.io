@@ -37,15 +37,13 @@ const readTime = readingTime(entry.body)
         </div>
       )
     }
-    <div class="flex-grow">
+    <div class="flex flex-grow flex-col gap-1">
       <h3 class="text-lg">
         {entry.data.title}
       </h3>
-      <p class="mb-2 text-sm text-muted-foreground">
-        {entry.data.description}
-      </p>
+      <p class="mb-2 pb-1 text-sm">{entry.data.description}</p>
       <div
-        class="mb-2 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"
+        class="mb-2 flex flex-wrap items-center gap-x-2 text-sm text-neutral-content"
       >
         <span>{formattedDate}</span>
         <span>{readTime}</span>

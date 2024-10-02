@@ -63,6 +63,7 @@ const { title, description, image = '/static/twitter-card.png' } = Astro.props
         : 'theme-light'
     }
     const isDark = getThemePreference() === 'dark'
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
     document.documentElement.classList[isDark ? 'add' : 'remove']('dark')
   }
 

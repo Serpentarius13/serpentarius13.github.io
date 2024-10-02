@@ -46,8 +46,10 @@ export const ThemeSwitcher: FC<Props> = ({}) => {
       theme !== 'dark'
     ) {
       document.documentElement.classList.remove('dark')
+      document.documentElement.dataset.theme = 'light'
     } else {
       document.documentElement.classList.add('dark')
+      document.documentElement.dataset.theme = 'dark'
     }
   }
 
