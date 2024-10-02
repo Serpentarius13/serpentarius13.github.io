@@ -1,0 +1,12 @@
+---
+import { Image } from 'astro:assets'
+
+const { width = 24, height = 24 } = Astro.props
+---
+
+<Image
+  src="/static/logo.webp"
+  alt="Void item from Binding of Isaac"
+  width={width}
+  height={height}
+/>

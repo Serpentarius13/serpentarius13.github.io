@@ -1,6 +1,6 @@
 ---
-import { Avatar } from '@/components/ui-new/Avatar'
 import { formatDate, parseAuthors, readingTime } from '@/lib/utils'
+import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
 import Link from './Link.astro'
@@ -19,7 +19,7 @@ const authors = await parseAuthors(entry.data.authors ?? [])
 ---
 
 <div
-  class="not-prose card rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+  class="not-prose group card relative rounded-xl border transition-colors duration-300 ease-in-out hover:bg-secondary/50"
 >
   <Link
     href={`/${entry.collection}/${entry.slug}`}
@@ -39,7 +39,7 @@ const authors = await parseAuthors(entry.data.authors ?? [])
       )
     }
     <div class="flex-grow">
-      <h3 class="mb-1 text-lg font-semibold">
+      <h3 class="text-lg">
         {entry.data.title}
       </h3>
       <p class="mb-2 text-sm text-muted-foreground">
@@ -48,25 +48,6 @@ const authors = await parseAuthors(entry.data.authors ?? [])
       <div
         class="mb-2 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground"
       >
-        {
-          authors.length > 0 && (
-            <>
-              {authors.map((author) => (
-                <div class="flex items-center gap-x-1.5">
-                  <Avatar
-                    src={author.avatar}
-                    alt={author.name}
-                    placeholder={author.name[0]}
-                    imgWrapperClassname="w-5 rounded-full"
-                    client:load
-                  />
-
-                  <span>{author.name}</span>
-                </div>
-              ))}
-            </>
-          )
-        }
         <span>{formattedDate}</span>
         <span>{readTime}</span>
       </div>
@@ -74,7 +55,10 @@ const authors = await parseAuthors(entry.data.authors ?? [])
         entry.data.tags && (
           <div class="flex flex-wrap gap-2">
             {entry.data.tags.map((tag) => (
-              <span class="badge">#{tag}</span>
+              <span class="badge flex items-center">
+                <Icon name="lucide:hash" class="size-3" />
+                {tag}
+              </span>
             ))}
           </div>
         )

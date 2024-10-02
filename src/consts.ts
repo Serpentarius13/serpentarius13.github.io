@@ -17,17 +17,12 @@ export const SITE: Site = {
   DESCRIPTION:
     'Void Space is my personal blog, where I write about stuff programming & not.',
   EMAIL: 'serpentarium13@mail.ru',
-  NUM_POSTS_ON_HOMEPAGE: 2,
+  NUM_POSTS_ON_HOMEPAGE: 3,
   POSTS_PER_PAGE: 3,
   SITEURL: 'https://astro-erudite.vercel.app',
 }
 
-export const NAV_LINKS: Link[] = [
-  { href: '/blog', label: 'blog' },
-  { href: '/authors', label: 'authors' },
-  // { href: '/about', label: 'about' },
-  { href: '/tags', label: 'tags' },
-]
+export const NAV_LINKS: Link[] = [{ href: '/blog', label: 'blog' }]
 
 export const SOCIAL_LINKS: Link[] = [
   { href: 'https://github.com/Serpentarius13', label: 'GitHub' },

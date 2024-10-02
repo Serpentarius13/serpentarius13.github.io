@@ -1,7 +1,6 @@
 ---
 import BlogCard from '@/components/BlogCard.astro'
 import Container from '@/components/Container.astro'
-import IndexHeader from '@/components/IndexHeader.astro'
 import Link from '@/components/Link.astro'
 import { SITE } from '@/consts'
 import Layout from '@/layouts/Layout.astro'
@@ -13,11 +12,11 @@ const blog = (await getCollection('blog'))
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE)
 ---
 
-<Layout title="Home" description={SITE.DESCRIPTION}>
-  <Container class="flex flex-col gap-y-6">
-    <IndexHeader />
-    <section class="flex flex-col gap-y-4">
-      <h2 class="text-2xl font-bold">Latest posts</h2>
+<Layout title="Home" description={SITE.DESCRIPTION} class="h-0">
+  <Container class="flex h-full flex-col gap-y-6">
+    <!-- <IndexHeader /> -->
+    <section class="flex h-full flex-col gap-y-4">
+      <h2 class="text-2xl font-bold">Posts</h2>
       <ul class="not-prose flex flex-col gap-y-4">
         {
           blog.map((post) => (
@@ -27,8 +26,8 @@ const blog = (await getCollection('blog'))
           ))
         }
       </ul>
-      <div class="flex justify-center">
-        <Link href="/blog" class="btn btn-ghost flex items-center">
+      <div class="mt-auto flex justify-center">
+        <Link href="/blog" class="btn flex items-center hover:btn-primary">
           See all posts <span
             class="ml-1.5 transition-transform group-hover:translate-x-1"
             >&rarr;</span

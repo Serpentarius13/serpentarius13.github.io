@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css'
-import '../styles/katex.css'
 
 import { SITE } from '@/consts'
 import { ViewTransitions } from 'astro:transitions'
@@ -65,17 +64,6 @@ const { title, description, image = '/static/twitter-card.png' } = Astro.props
     }
     const isDark = getThemePreference() === 'dark'
     document.documentElement.classList[isDark ? 'add' : 'remove']('dark')
-
-    if (typeof localStorage !== 'undefined') {
-      const observer = new MutationObserver(() => {
-        const isDark = document.documentElement.classList.contains('dark')
-        localStorage.setItem('theme', isDark ? 'dark' : 'theme-light')
-      })
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-      })
-    }
   }
 
   setDarkMode(document)
