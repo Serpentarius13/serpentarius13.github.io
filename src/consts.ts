@@ -13,13 +13,13 @@ export type Link = {
 }
 
 export const SITE: Site = {
-  TITLE: 'Void Space',
+  TITLE: 'Void Flower',
   DESCRIPTION:
-    'Void Space is my personal blog, where I write about stuff programming & not.',
+    'Void Flower is my personal website with (for now just a) blog, where I write about stuff programming & not.',
   EMAIL: 'serpentarium13@mail.ru',
   NUM_POSTS_ON_HOMEPAGE: 3,
   POSTS_PER_PAGE: 3,
-  SITEURL: 'https://astro-erudite.vercel.app',
+  SITEURL: 'https://void-flower.vercel.app/',
 }
 
 export const NAV_LINKS: Link[] = [{ href: '/blog', label: 'blog' }]

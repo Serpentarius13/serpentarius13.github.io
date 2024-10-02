@@ -16,8 +16,6 @@ import remarkToc from 'remark-toc'
 
 import icon from 'astro-icon'
 
-import vercel from '@astrojs/vercel/serverless'
-
 // https://astro.build/config
 export default defineConfig({
   site: 'https://astro-erudite.vercel.app',
@@ -61,6 +59,6 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  adapter: vercel(),
+
   output: 'hybrid',
 })
