@@ -26,6 +26,7 @@ export const Avatar: FC<Props> = ({
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    setIsError(false)
     setIsLoaded(false)
     const image = new Image()
 
@@ -56,7 +57,11 @@ export const Avatar: FC<Props> = ({
   return (
     <div className={cn('avatar', wrapperClassName)}>
       <div className={cn('', imgWrapperClassname)}>
-        <img alt={alt} src={src} className={cn('', imgClassname)} />
+        <img
+          alt={alt}
+          src={isError ? '/static/logo.webp' : src}
+          className={cn('', imgClassname)}
+        />
       </div>
     </div>
   )

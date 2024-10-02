@@ -84,9 +84,7 @@ export const SITE: Site = {
 
 export const NAV_LINKS: Link[] = [
   { href: '/blog', label: 'blog' },
-  { href: '/authors', label: 'authors' },
   { href: '/about', label: 'about' },
-  { href: '/tags', label: 'tags' },
 ]
 
 export const SOCIAL_LINKS: Link[] = [
@@ -110,19 +108,17 @@ description: 'A brief description of your post!'
 date: 2024-01-01
 tags: ['tag1', 'tag2']
 image: './image.png'
-authors: ['author1', 'author2']
 draft: false
 ---
 ```
 
 The blog post schema is defined as follows:
 
-| Field         | Type (Zod)      | Requirements                                                                                                                                                                      | Required |
-| ------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| `title`       | `string`        | Must be ≤60 characters.                                                                                                                                                           | Yes      |
-| `description` | `string`        | Must be ≤155 characters.                                                                                                                                                          | Yes      |
-| `date`        | `coerce.date()` | Must be in `YYYY-MM-DD` format.                                                                                                                                                   | Yes      |
-| `image`       | `image()`       | Must be exactly 1200px &times; 630px.                                                                                                                                             | Optional |
-| `tags`        | `string[]`      | Preferably use kebab-case for these.                                                                                                                                              | Optional |
-| `authors`     | `string[]`      | If the author has a profile, use the slug associated with their Markdown file in `src/content/authors/` (e.g. if their file is named `jane-doe.md`, use `jane-doe` in the array). | Optional |
-| `draft`       | `boolean`       | Defaults to `false` if not provided.                                                                                                                                              | Optional |
+| Field         | Type (Zod)      | Requirements                          | Required |
+| ------------- | --------------- | ------------------------------------- | -------- |
+| `title`       | `string`        | Must be ≤60 characters.               | Yes      |
+| `description` | `string`        | Must be ≤155 characters.              | Yes      |
+| `date`        | `coerce.date()` | Must be in `YYYY-MM-DD` format.       | Yes      |
+| `image`       | `image()`       | Must be exactly 1200px &times; 630px. | Optional |
+| `tags`        | `string[]`      | Preferably use kebab-case for these.  | Optional |
+| `draft`       | `boolean`       | Defaults to `false` if not provided.  | Optional |
