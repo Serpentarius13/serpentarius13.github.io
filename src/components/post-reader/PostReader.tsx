@@ -1,18 +1,20 @@
 import { readPost } from '@/lib/api'
 import { type Post } from '@prisma/client'
-import { useEffect, useRef, useState, type FC } from 'react'
+import { useEffect, useState, type FC } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 
 interface Props {
   postId: string
 }
 
 export const PostReader: FC<Props> = ({ postId }) => {
-  const hasRead = useRef(false)
+  const [hasRead, setHasRead] = useLocalStorage(`post-${postId}`, false)
+
   const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
-    if (hasRead.current) return
-    hasRead.current = true
+    if (hasRead) return
+    setHasRead(true)
     async function run() {
       await readPost({ postId }).then((r) => setPost(r))
     }
