@@ -54,8 +54,6 @@ export const GlobalSearchTrigger: FC<Props> = ({ records }) => {
     }
   }, [])
 
-  console.log(hasMounted, isSearchModalOpened)
-
   return (
     <>
       <Search onClick={handleOpenModal} placeholder="Tap here!" />
@@ -75,7 +73,7 @@ export const GlobalSearchTrigger: FC<Props> = ({ records }) => {
           >
             <div
               className={
-                'absolute left-0 top-0 -z-[10] h-screen w-screen bg-black/60 pt-12 opacity-0  backdrop-blur-md transition-all'
+                'absolute left-0 top-0 -z-[10] h-full w-full bg-black/60 pt-12 opacity-0  backdrop-blur-md transition-all'
               }
               onClick={handleCloseModal}
               ref={nodeRef}

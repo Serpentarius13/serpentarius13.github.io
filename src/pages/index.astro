@@ -9,24 +9,15 @@ import { getCollection } from 'astro:content'
 
 const blog = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())[0]
 ---
 
-<Layout title="Home" description={SITE.DESCRIPTION} class="h-0">
+<Layout title="Home" description={SITE.DESCRIPTION}>
   <Container class="flex h-full flex-col gap-y-6">
     <IndexHeader />
-    <section class="flex h-full flex-col gap-y-4">
+    <section class="flex flex-1 flex-col gap-4">
       <h2 class="text-2xl font-bold">My latest post</h2>
-      <ul class="not-prose flex flex-col gap-y-4">
-        {
-          blog.map((post) => (
-            <li>
-              <BlogCard entry={post} />
-            </li>
-          ))
-        }
-      </ul>
+      <BlogCard entry={blog} />
       <div class="mt-auto flex justify-center">
         <Link href="/blog" class="btn flex items-center hover:btn-primary">
           See all posts <span

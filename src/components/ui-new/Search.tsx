@@ -19,7 +19,7 @@ export const Search = ({
   return (
     <label
       className={cn(
-        'group flex items-center gap-2 rounded-md bg-base-100 px-1 py-1 ring-2  backdrop-blur-sm ',
+        'group flex w-full items-center gap-2 rounded-md bg-base-100 px-1 py-1 ring-2 ring-base-content backdrop-blur-sm dark:ring-primary ',
         wrapperClassName,
       )}
       onClick={onClick}
@@ -27,7 +27,7 @@ export const Search = ({
       <SearchIcon className="min-w-8" />
       <input
         className={cn(
-          'h-full border-none bg-transparent px-1 py-2 text-lg text-base-content outline-none placeholder:text-base-content/70',
+          'h-full w-full border-none bg-transparent px-1 py-2 text-lg text-base-content outline-none placeholder:text-base-content/70',
           inputClassName,
         )}
         type="search"

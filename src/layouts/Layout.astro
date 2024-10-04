@@ -40,7 +40,7 @@ const records = await getCollection('blog').then((blogs) => {
   </head>
   <body>
     <div
-      class="box-border flex h-fit min-h-screen flex-col gap-y-6 font-sans antialiased"
+      class="box-border flex h-full max-w-full flex-col gap-y-6 overflow-x-hidden font-sans antialiased"
     >
       <Header records={records} />
       <main class={cn('flex-grow', className)}>

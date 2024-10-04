@@ -29,17 +29,21 @@ import Flower from './flower.svg?raw'
           content. Hope you will rest well 😼
         </p>
       </div>
-      <div class="h-full min-w-[240px]">
-        <Fragment class:list="!stroke-red-500" set:html={Flower} />
+      <div class="h-full">
+        <Fragment set:html={Flower} />
       </div>
     </div>
   </div>
 </section>
 
-<style is:global>
+<style is:global lang="postcss">
   html.dark {
     #flower g {
-      @apply fill-blue-500;
+      @apply fill-primary;
     }
+  }
+
+  #flower {
+    @apply w-[120px] md:min-w-[320px] h-[200px] md:h-[320px]
   }
 </style>

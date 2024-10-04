@@ -1,16 +1,24 @@
 ---
 import Container from '@/components/Container.astro'
 import Link from '@/components/Link.astro'
-import { NAV_LINKS } from '@/consts'
+import { NAV_LINKS, SITE } from '@/consts'
+import { getCollection } from 'astro:content'
+import Logo from './Logo.astro'
 import { GlobalSearchTrigger } from './global-search/GlobalSearchTrigger'
 import type { GlobalSearchRecord } from './global-search/types'
 import { ThemeSwitcher } from './ui-new/ThemeSwitcher'
 
-interface Props {
-  records: GlobalSearchRecord[]
-}
-
-const { records } = Astro.props
+const records = await getCollection('blog').then((blogs) => {
+  return blogs.map((b) => {
+    return {
+      title: b.data.title,
+      content: b.data.description,
+      description: b.data.description,
+      slug: b.slug,
+      tags: b.data.tags || [],
+    } satisfies GlobalSearchRecord
+  })
+})
 ---
 
 <header
@@ -19,14 +27,17 @@ const { records } = Astro.props
 >
   <Container>
     <div class="flex flex-wrap items-center justify-between gap-4 py-4">
-      <!-- <Logo />
-        <span class="font-bold text-gray-600 dark:text-gray-200">
-          {SITE.TITLE}
-        </span> -->
-
-      <GlobalSearchTrigger records={records} client:load />
       <div class="flex items-center gap-2 md:gap-4">
-        <nav class="hidden items-center gap-4 text-sm sm:gap-6 md:flex">
+        <Link
+          href="/"
+          class="flex flex-shrink-0 items-center gap-2 text-xl font-semibold transition-colors duration-300 hover:text-primary"
+        >
+          <Logo />
+          <span class="font-bold text-gray-600 dark:text-gray-200">
+            {SITE.TITLE}
+          </span>
+        </Link>
+        <nav class="flex items-center gap-4 text-sm sm:gap-6">
           {
             NAV_LINKS.map((item) => (
               <Link
@@ -38,7 +49,15 @@ const { records } = Astro.props
             ))
           }
         </nav>
-        <ThemeSwitcher client:load />
+      </div>
+
+      <div class="flex items-center gap-2 md:gap-4">
+        <div class="flex-1">
+          <GlobalSearchTrigger records={records} client:load />
+        </div>
+        <div class="flex items-center gap-2 md:gap-4">
+          <ThemeSwitcher client:load />
+        </div>
       </div>
     </div>
   </Container>

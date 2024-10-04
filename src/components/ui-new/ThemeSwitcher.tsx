@@ -40,7 +40,6 @@ export const ThemeSwitcher: FC<Props> = ({}) => {
 
   const handleSetTheme = (theme: string) => {
     setTheme(theme)
-    console.log('go')
     if (
       document.documentElement.classList.contains('dark') &&
       theme !== 'dark'
