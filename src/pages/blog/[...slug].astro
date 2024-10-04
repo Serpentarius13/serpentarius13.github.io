@@ -93,7 +93,7 @@ const {
             >
               <span>{formatDate(post.data.date)}</span>
               <span>{readingTime}</span>
-              <PostReader client:only="react" postId={post.data.id} />
+              <PostReader client:load postId={post.data.id} />
             </div>
           </div>
           <div class="mt-4 flex flex-wrap justify-center gap-2">

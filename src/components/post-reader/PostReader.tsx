@@ -1,4 +1,4 @@
-import { readPost } from '@/lib/api'
+import { getPost, readPost } from '@/lib/api'
 import { type Post } from '@prisma/client'
 import { useEffect, useState, type FC } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
@@ -13,15 +13,22 @@ export const PostReader: FC<Props> = ({ postId }) => {
   const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
-    if (hasRead) return
-    setHasRead(true)
     async function run() {
-      await readPost({ postId }).then((r) => setPost(r))
+      if (hasRead) {
+        await getPost(postId).then((r) => {
+          setPost(r)
+        })
+        return
+      }
+      await readPost({ postId }).then((r) => {
+        setPost(r)
+        setHasRead(true)
+      })
     }
     run()
   }, [])
 
-  if (!post) return null
+  if (!post) return <div className="skeleton h-4 w-12" />
 
   return <span>{post.readings} views</span>
 }
