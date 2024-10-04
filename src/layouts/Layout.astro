@@ -2,6 +2,7 @@
 import Footer from '@/components/Footer.astro'
 import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
+import type { GlobalSearchRecord } from '@/components/global-search/types'
 import { SITE } from '@/consts'
 import { cn } from '@/lib/utils'
 import { getCollection } from 'astro:content'
@@ -15,7 +16,17 @@ type Props = {
 
 const { title, description, image, class: className } = Astro.props
 
-const pages = await getCollection('blog')
+const records = await getCollection('blog').then((blogs) => {
+  return blogs.map((b) => {
+    return {
+      title: b.data.title,
+      content: b.data.description,
+      description: b.data.description,
+      slug: b.slug,
+      tags: b.data.tags || [],
+    } satisfies GlobalSearchRecord
+  })
+})
 ---
 
 <!doctype html>
@@ -31,7 +42,7 @@ const pages = await getCollection('blog')
     <div
       class="box-border flex h-fit min-h-screen flex-col gap-y-6 font-sans antialiased"
     >
-      <Header />
+      <Header records={records} />
       <main class={cn('flex-grow', className)}>
         <slot />
       </main>

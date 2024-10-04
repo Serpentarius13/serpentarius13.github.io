@@ -19,7 +19,7 @@ import node from '@astrojs/node'
 import { toString } from 'mdast-util-to-string'
 import getReadingTime from 'reading-time'
 
-import react from '@astrojs/react';
+import react from '@astrojs/react'
 
 const remarkTimePlugin: RemarkPlugin = () => {
   return function (tree, { data }) {
@@ -37,10 +37,16 @@ const remarkTimePlugin: RemarkPlugin = () => {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://astro-erudite.vercel.app',
-  integrations: [tailwind({
-    applyBaseStyles: false,
-  }), sitemap(), mdx(), icon(), react()],
+  site: 'https://void-flower.vercel.app/',
+  integrations: [
+    tailwind({
+      applyBaseStyles: false,
+    }),
+    sitemap(),
+    mdx(),
+    icon(),
+    react(),
+  ],
 
   markdown: {
     syntaxHighlight: false,
