@@ -14,7 +14,7 @@ import rehypePrettyCode from 'rehype-pretty-code'
 import remarkEmoji from 'remark-emoji'
 import remarkToc from 'remark-toc'
 
-import node from '@astrojs/node'
+import vercel from '@astrojs/vercel/serverless'
 
 import { toString } from 'mdast-util-to-string'
 import getReadingTime from 'reading-time'
@@ -81,7 +81,5 @@ export default defineConfig({
   },
 
   output: 'hybrid',
-  adapter: node({
-    mode: 'standalone',
-  }),
+  adapter: vercel(),
 })
