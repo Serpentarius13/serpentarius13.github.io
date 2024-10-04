@@ -21,7 +21,7 @@ const LazyLoaded = lazy(() =>
 )
 
 export const GlobalSearchTrigger: FC<Props> = ({ records }) => {
-  const [transition, setTransition] = useTransition()
+  const [, setTransition] = useTransition()
   const [isSearchModalOpened, setIsSearchModalOpened] = useState(false)
 
   const nodeRef = useRef<HTMLDivElement>(null)

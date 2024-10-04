@@ -4,7 +4,7 @@ import type { APIRoute } from 'astro'
 
 export const prerender = false
 
-export const POST: APIRoute = async ({ params, request }) => {
+export const POST: APIRoute = async ({ request }) => {
   const body = await request.json()
   const bodyParsed = await readPostSchema.safeParseAsync(body)
   if (!bodyParsed.success) {
