@@ -3,8 +3,7 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
-import { PostHeart } from '@/components/ui-new/PostHeart'
-import { PreBlock } from '@/components/ui-new/PreBlock'
+import { PostReader } from '@/components/post-reader/PostReader'
 import Layout from '@/layouts/Layout.astro'
 import { formatDate } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
@@ -89,9 +88,12 @@ const {
           <div
             class="text-muted-foreground flex flex-wrap items-center justify-center gap-2 text-sm"
           >
-            <div class="flex items-center gap-2">
-              <span>{formatDate(post.data.date)}</span> |
+            <div
+              class="flex items-center gap-2 [&>*]:border-r-[1px] [&>*]:border-base-content [&>*]:pr-2"
+            >
+              <span>{formatDate(post.data.date)}</span>
               <span>{readingTime}</span>
+              <PostReader client:only="react" postId={post.data.id} />
             </div>
           </div>
           <div class="mt-4 flex flex-wrap justify-center gap-2">
@@ -118,14 +120,8 @@ const {
       {headings.length > 0 && <TableOfContents headings={headings} />}
 
       <article class="prose prose-neutral max-w-none dark:prose-invert">
-        <Content
-          components={{
-            pre: PreBlock,
-          }}
-        />
+        <Content />
       </article>
-
-      <PostHeart postid={post.data.id} client:only="preact" />
 
       <PostNavigation prevPost={prevPost} nextPost={nextPost} />
     </Container>
