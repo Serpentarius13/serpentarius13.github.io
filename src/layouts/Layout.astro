@@ -4,6 +4,7 @@ import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
 import { SITE } from '@/consts'
 import { cn } from '@/lib/utils'
+import { getCollection } from 'astro:content'
 
 type Props = {
   title: string
@@ -13,6 +14,8 @@ type Props = {
 }
 
 const { title, description, image, class: className } = Astro.props
+
+const pages = await getCollection('blog')
 ---
 
 <!doctype html>

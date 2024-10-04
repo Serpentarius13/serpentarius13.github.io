@@ -3,9 +3,10 @@ import Breadcrumbs from '@/components/Breadcrumbs.astro'
 import Container from '@/components/Container.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
+import { PostHeart } from '@/components/ui-new/PostHeart'
 import { PreBlock } from '@/components/ui-new/PreBlock'
 import Layout from '@/layouts/Layout.astro'
-import { formatDate, readingTime } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
@@ -46,7 +47,11 @@ const nextPost = getNextPost(currentPostSlug)
 const prevPost = getPrevPost(currentPostSlug)
 
 const post = Astro.props
-const { Content, headings } = await post.render()
+const {
+  Content,
+  headings,
+  remarkPluginFrontmatter: { readingTime },
+} = await post.render()
 ---
 
 <Layout
@@ -54,106 +59,110 @@ const { Content, headings } = await post.render()
   description={post.data.description}
   image={post.data.image?.src ?? '/static/1200x630.png'}
 >
-  <Container class="flex flex-col gap-y-6">
-    <Breadcrumbs
-      items={[
-        { href: '/blog', label: 'Blog', icon: 'lucide:archive' },
-        { label: post.data.title, icon: 'lucide:file-text' },
-      ]}
-    />
+  <div data-pagefind-body>
+    <Container class="flex flex-col gap-y-6">
+      <Breadcrumbs
+        items={[
+          { href: '/blog', label: 'Blog', icon: 'lucide:archive' },
+          { label: post.data.title, icon: 'lucide:file-text' },
+        ]}
+      />
 
-    {
-      post.data.image && (
-        <Image
-          src={post.data.image}
-          alt={post.data.title}
-          width={1200}
-          height={630}
-          class="object-cover"
-        />
-      )
-    }
+      {
+        post.data.image && (
+          <Image
+            src={post.data.image}
+            alt={post.data.title}
+            width={1200}
+            height={630}
+            class="object-cover"
+          />
+        )
+      }
 
-    <section class="flex flex-col gap-6 text-center">
-      <div>
-        <h1 class="mb-4 text-4xl font-bold leading-tight sm:text-5xl">
-          {post.data.title}
-        </h1>
+      <section class="flex flex-col gap-6 text-center">
+        <div>
+          <h1 class="mb-4 text-4xl font-bold leading-tight sm:text-5xl">
+            {post.data.title}
+          </h1>
 
-        <div
-          class="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground"
-        >
-          <div class="flex items-center gap-2">
-            <span>{formatDate(post.data.date)}</span>
-            <span>{readingTime(post.body)}</span>
+          <div
+            class="text-muted-foreground flex flex-wrap items-center justify-center gap-2 text-sm"
+          >
+            <div class="flex items-center gap-2">
+              <span>{formatDate(post.data.date)}</span> |
+              <span>{readingTime}</span>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-wrap justify-center gap-2">
+            {
+              post.data.tags && post.data.tags.length > 0 ? (
+                post.data.tags.map((tag) => (
+                  <div class="badge badge-secondary">
+                    <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
+                    {tag}
+                  </div>
+                ))
+              ) : (
+                <span class="text-muted-foreground text-sm">
+                  No tags available
+                </span>
+              )
+            }
           </div>
         </div>
-        <div class="mt-4 flex flex-wrap justify-center gap-2">
-          {
-            post.data.tags && post.data.tags.length > 0 ? (
-              post.data.tags.map((tag) => (
-                <div class="badge badge-secondary">
-                  <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
-                  {tag}
-                </div>
-              ))
-            ) : (
-              <span class="text-sm text-muted-foreground">
-                No tags available
-              </span>
-            )
-          }
-        </div>
-      </div>
+
+        <PostNavigation prevPost={prevPost} nextPost={nextPost} />
+      </section>
+
+      {headings.length > 0 && <TableOfContents headings={headings} />}
+
+      <article class="prose prose-neutral max-w-none dark:prose-invert">
+        <Content
+          components={{
+            pre: PreBlock,
+          }}
+        />
+      </article>
+
+      <PostHeart postid={post.data.id} client:only="preact" />
 
       <PostNavigation prevPost={prevPost} nextPost={nextPost} />
-    </section>
+    </Container>
 
-    {headings.length > 0 && <TableOfContents headings={headings} />}
-
-    <article class="prose prose-neutral max-w-none dark:prose-invert">
-      <Content
-        components={{
-          pre: PreBlock,
-        }}
+    <button
+      class="group btn btn-outline fixed bottom-8 right-8 z-50 hidden"
+      id="scroll-to-top"
+      title="Scroll to top"
+      aria-label="Scroll to top"
+    >
+      <Icon
+        name="lucide:arrow-up"
+        class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
       />
-    </article>
+    </button>
 
-    <PostNavigation prevPost={prevPost} nextPost={nextPost} />
-  </Container>
+    <script>
+      document.addEventListener('astro:page-load', () => {
+        const scrollToTopButton = document.getElementById('scroll-to-top')
+        const footer = document.querySelector('footer')
 
-  <button
-    class="group btn btn-outline fixed bottom-8 right-8 z-50 hidden"
-    id="scroll-to-top"
-    title="Scroll to top"
-    aria-label="Scroll to top"
-  >
-    <Icon
-      name="lucide:arrow-up"
-      class="mx-auto size-4 transition-all group-hover:-translate-y-0.5"
-    />
-  </button>
+        if (scrollToTopButton && footer) {
+          scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          })
 
-  <script>
-    document.addEventListener('astro:page-load', () => {
-      const scrollToTopButton = document.getElementById('scroll-to-top')
-      const footer = document.querySelector('footer')
+          window.addEventListener('scroll', () => {
+            const footerRect = footer.getBoundingClientRect()
+            const isFooterVisible = footerRect.top <= window.innerHeight
 
-      if (scrollToTopButton && footer) {
-        scrollToTopButton.addEventListener('click', () => {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        })
-
-        window.addEventListener('scroll', () => {
-          const footerRect = footer.getBoundingClientRect()
-          const isFooterVisible = footerRect.top <= window.innerHeight
-
-          scrollToTopButton.classList.toggle(
-            'hidden',
-            window.scrollY <= 300 || isFooterVisible,
-          )
-        })
-      }
-    })
-  </script>
+            scrollToTopButton.classList.toggle(
+              'hidden',
+              window.scrollY <= 300 || isFooterVisible,
+            )
+          })
+        }
+      })
+    </script>
+  </div>
 </Layout>

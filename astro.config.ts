@@ -1,6 +1,5 @@
-import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+import { rehypeHeadingIds, type RemarkPlugin } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
-import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import sectionize from '@hbsnow/rehype-sectionize'
@@ -9,27 +8,40 @@ import {
   transformerMetaHighlight,
   transformerNotationDiff,
 } from '@shikijs/transformers'
+import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
 import rehypePrettyCode from 'rehype-pretty-code'
 import remarkEmoji from 'remark-emoji'
 import remarkToc from 'remark-toc'
 
-import icon from 'astro-icon'
+import node from '@astrojs/node'
 
-import vercel from '@astrojs/vercel/serverless'
+import { toString } from 'mdast-util-to-string'
+import getReadingTime from 'reading-time'
+
+import react from '@astrojs/react';
+
+const remarkTimePlugin: RemarkPlugin = () => {
+  return function (tree, { data }) {
+    const filteredChildren = tree.children.filter((c) => c.type !== 'code')
+
+    const textOnPage = toString({
+      type: 'root',
+      children: filteredChildren,
+    })
+    const readingTime = getReadingTime(textOnPage)
+    //@ts-expect-error
+    data.astro.frontmatter.readingTime = readingTime.text
+  }
+}
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://astro-erudite.vercel.app',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    sitemap(),
-    mdx(),
-    react(),
-    icon(),
-  ],
+  integrations: [tailwind({
+    applyBaseStyles: false,
+  }), sitemap(), mdx(), icon(), react()],
+
   markdown: {
     syntaxHighlight: false,
     rehypePlugins: [
@@ -53,7 +65,7 @@ export default defineConfig({
         },
       ],
     ],
-    remarkPlugins: [remarkToc, remarkEmoji],
+    remarkPlugins: [remarkToc, remarkEmoji, remarkTimePlugin],
   },
   server: {
     port: 1234,
@@ -63,5 +75,7 @@ export default defineConfig({
   },
 
   output: 'hybrid',
-  adapter: vercel(),
+  adapter: node({
+    mode: 'standalone',
+  }),
 })

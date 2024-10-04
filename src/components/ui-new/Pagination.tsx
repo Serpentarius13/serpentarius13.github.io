@@ -1,13 +1,13 @@
 import { cn } from '@/lib/utils'
 import { LucideChevronLeft, LucideChevronRight } from 'lucide-react'
-
+import { type FC } from 'react'
 interface PaginationProps {
   currentPage: number
   totalPages: number
   baseUrl: string
 }
 
-const PaginationComponente: React.FC<PaginationProps> = ({
+const PaginationComponente: FC<PaginationProps> = ({
   currentPage,
   totalPages,
   baseUrl,

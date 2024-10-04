@@ -25,7 +25,10 @@ const { page } = Astro.props
 const postsByYear = page.data.reduce(
   (acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
     const year = post.data.date.getFullYear().toString()
-    ;(acc[year] ??= []).push(post)
+    if (!acc[year]) {
+      acc[year] = []
+    }
+    acc[year].push(post)
     return acc
   },
   {},
@@ -35,7 +38,7 @@ const years = Object.keys(postsByYear).sort((a, b) => parseInt(b) - parseInt(a))
 ---
 
 <Layout title="Blog" description="Blog">
-  <Container class="flex grow flex-col gap-y-6">
+  <Container class="flex grow flex-col gap-y-6" 2>
     <Breadcrumbs
       items={[
         {

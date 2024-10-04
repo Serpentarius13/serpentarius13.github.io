@@ -4,6 +4,7 @@ const blog = defineCollection({
   type: 'content',
   schema: ({ image }) =>
     z.object({
+      id: z.string().min(10, 'id must be at least 10 characters'),
       title: z
         .string()
         .max(

@@ -1,5 +1,5 @@
 ---
-import { formatDate, readingTime } from '@/lib/utils'
+import { formatDate } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'
@@ -14,11 +14,13 @@ const { entry } = Astro.props as {
 }
 
 const formattedDate = formatDate(entry.data.date)
-const readTime = readingTime(entry.body)
+const {
+  remarkPluginFrontmatter: { readingTime },
+} = await entry.render()
 ---
 
 <div
-  class="not-prose group card relative rounded-xl border transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+  class="not-prose group card relative rounded-xl border transition-all ease-in-out hover:shadow-xl dark:hover:ring-4 dark:hover:ring-primary"
 >
   <Link
     href={`/${entry.collection}/${entry.slug}`}
@@ -45,14 +47,14 @@ const readTime = readingTime(entry.body)
       <div
         class="mb-2 flex flex-wrap items-center gap-x-2 text-sm text-neutral-content"
       >
-        <span>{formattedDate}</span>
-        <span>{readTime}</span>
+        <span>{formattedDate}</span> |
+        <span>{readingTime}</span>
       </div>
       {
         entry.data.tags && (
           <div class="flex flex-wrap gap-2">
             {entry.data.tags.map((tag) => (
-              <span class="badge flex items-center">
+              <span class="badge flex items-center duration-300 group-hover:bg-secondary group-hover:text-secondary-content ">
                 <Icon name="lucide:hash" class="size-3" />
                 {tag}
               </span>
@@ -62,4 +64,9 @@ const readTime = readingTime(entry.body)
       }
     </div>
   </Link>
+
+  <Icon
+    name="lucide:chevron-right"
+    class="absolute -right-32 top-1/2 flex size-12 h-12 w-12 -translate-y-1/2 items-center justify-center opacity-0 transition-all duration-500 ease-in-out group-hover:-translate-x-36 group-hover:opacity-100"
+  />
 </div>
