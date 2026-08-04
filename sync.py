@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 LINKS_JSON = ROOT / "links.json"
-CONTENTS_HTML = ROOT / "contents.html"
+CONTENTS_HTML = ROOT / "index.html"
 
 SOURCE_SECTIONS = ("todo", "started", "backlog", )
 HEADER_RE = re.compile(r"^## (\w+)\s*$")
