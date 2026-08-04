@@ -3,16 +3,7 @@
     {
       "id": "todo",
       "title": "Todo",
-      "links": [
-        {
-          "url": "https://www.youtube.com/watch?v=bpqFZBWcStU",
-          "text": "hello"
-        },
-        {
-          "url": "https://habr.com/ru/companies/beeline_cloud/articles/1038708/",
-          "text": "world!"
-        }
-      ]
+      "links": []
     },
     {
       "id": "started",

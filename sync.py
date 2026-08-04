@@ -54,21 +54,13 @@ def merge_links(data: dict, parsed: dict[str, list[dict[str, str]]]) -> int:
     for name in SOURCE_SECTIONS:
         by_id.setdefault(name, {"id": name, "title": name.capitalize(), "links": []})
 
-    existing = {
-        (link["url"], link["text"])
-        for section in data["sections"]
-        for link in section["links"]
-    }
     changes = 0
-
     for name in SOURCE_SECTIONS:
-        for link in parsed[name]:
-            key = (link["url"], link["text"])
-            if key in existing:
-                continue
-            by_id[name]["links"].append({"url": link["url"], "text": link["text"]})
-            existing.add(key)
-            changes += 1
+        old = {(link["url"], link["text"]) for link in by_id[name]["links"]}
+        new = {(link["url"], link["text"]) for link in parsed[name]}
+        if old != new:
+            changes += len(old - new) + len(new - old)
+            by_id[name]["links"] = list(parsed[name])
 
     data["sections"] = [by_id[name] for name in SOURCE_SECTIONS if name in by_id]
     return changes
